@@ -39,3 +39,50 @@ const fetchInitialCharacters = () => {
 // Fetch inicial para cargar personajes
 fetchInitialCharacters();
 
+// Fetch para buscar personajes por nombre
+const fetchSearchCharacters = (query) => {
+    const encodedQuery = encodeURIComponent(query.trim().toLowerCase()); // Codificar la búsqueda y convertir a minúsculas
+  
+    fetch(`https://api.disneyapi.dev/character?pageSize=50&name=${encodedQuery}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Estructura completa de la respuesta de la API:', data);  
+  
+        if (data && data.data) {
+          const characters = Array.isArray(data.data) ? data.data : [data.data]; 
+  
+          if (characters.length > 0) {
+            allCharacters = characters;
+            renderAllCharacters();
+          } else {
+            console.log('No se encontraron personajes');
+            allCharacters = [];
+            renderAllCharacters();
+          }
+        } else {
+          console.log('La respuesta no contiene datos esperados');
+          allCharacters = [];
+          renderAllCharacters();
+        }
+      })
+  };
+
+  // Maneja el evento de búsqueda
+const handleSearch = (ev) => {
+    ev.preventDefault();
+    const query = searchInput.value.trim();
+  
+    if (query !== '') {
+      fetchSearchCharacters(query);
+    } else {
+      console.warn('El campo de búsqueda está vacío.');
+    }
+  };
+  
+  // Event listener para el botón de buscar
+  searchBtn.addEventListener('click', handleSearch);
+  
+
+
+
+
