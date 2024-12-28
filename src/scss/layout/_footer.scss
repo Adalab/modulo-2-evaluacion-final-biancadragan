@@ -1,8 +1,22 @@
-.page__footer {
+.footer {
   position: fixed;
-  left: 0;
   bottom: 0;
-  width: 100vw;
-  padding: 1rem;
-  color: $color-secondary;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background-color: $primary-color;
+  color: $neutral-light;
+  text-align: center;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+
+  &__text {
+      margin: 0;
+      color: $neutral-light;
+  }
+
+  &:hover {
+      background-color: $primary-dark;
+  }
 }
