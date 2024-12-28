@@ -1,125 +1,91 @@
-![Adalab](https://beta.adalab.es/resources/images/adalab-logo-155x61-bg-white.png)
+# Disney Characters App
 
-# Adalab web starter kit
+This project is a web application that displays a list of Disney characters, allows users to mark characters as favorites, and saves them in the browser's local storage. Users can also search for specific characters by name.
 
-Ahoy! Este es nuestro Starter Kit creado en **node y vite**. ¿Y qué es un Starter kit? Pues es una **plantilla de proyecto con funcionalidades preinstaladas y preconfiguradas**.
+## Description
 
-Este Kit incluye un motor de plantillas HTML, el preprocesador SASS y un servidor local y muchas cosas más. El Kit nos ayuda a trabajar más cómodamente, nos automatiza tareas.
+The application is based on the Disney API and allows the following features:
 
-En el Kit hay 3 tipos de ficheros y carpetas:
+- View a list of Disney characters.
+- Mark and unmark characters as favorites.
+- Save favorite characters in localStorage so they persist between page reloads.
+- Search for characters by name and update the list of results in real-time.
 
-- Los ficheros que están sueltos en la raíz del repositorio, como vite.config.js, package.json... Son la configuración del proyecto y no necesitamos modificarlos (excepto este README.md, para describir tu proyecto).
-- La carpeta `src/`: son los ficheros de nuestra página web, como HTML, CSS, JS...
-- La carpeta `public/`, que tiene fichero estáticos como imágenes, fuentes, favicon, librerías de JavaScript antiguas (jQuery, ...)
-- Y la carpeta `docs/`, que es generada automáticamente cuando arrancamos el proyecto. El Kit lee los ficheros que hay dentro de `src/` y `public/`, los procesa y los genera dentro de `public/` y `docs/`.
+### Requirements:
 
-## Guía de inicio rápido
+Before you start, make sure you have the following installed:
 
-> **NOTA:** Necesitas tener instalado [Node JS](https://nodejs.org/) con una versión superior a la 14 para trabajar con este Starter Kit:
+a. A modern browser (Chrome, Firefox, etc.).  
+b. A code editor like Visual Studio Code.  
+c. An internet connection to use the Disney API.
 
-### Pasos a seguir cada vez que queremos arrancar un proyecto desde cero:
-
-1. **Crea tu propio repositorio.**
-1. Descarga este **Starter kit desde GitHub**.
-   - No recomendamos que clones este repo ya que no podrás añadir commits.
-1. **Copia todos los ficheros** de este Starter kit en la carpeta raíz de tu repositorio.
-   - Recuerda que debes copiar **también los ficheros ocultos** que comienzan por un punto.
-   - Si has decidido clonar este repo, no debes copiar la carpeta `.git`. Si lo haces estarás machacando tu propio repositorio.
-1. **Abre una terminal** en la carpeta raíz de tu repositorio.
-1. **Instala las dependencias** locales ejecutando en la terminal el comando:
+### Installation
+Clone the repository from GitHub Classroom.
 
 ```bash
-npm install
+git clone https://github.com/Adalab/modulo-2-evaluacion-final-biancadragan
 ```
 
-### Pasos para arrancar el proyecto:
+### Project Structure
+The project follows a basic structure for a web application:
 
-Una vez hemos instalado las dependencias, vamos a arrancar el proyecto. **El proyecto hay que arrancarlo cada vez que te pongas a programar.** Para ello ejecuta el comando:
+- index.html: Contains the HTML structure of the application.
+- styles.scss: The styles of the application written in SCSS.
+- app.js: The JavaScript file that handles the application logic, including interaction with the API, DOM manipulation, and localStorage handling.
+- 
+### Features
+1. Display character list: A request is made to the Disney API to get a list of characters, which is then displayed on the page.
+2. Mark as favorite: Clicking on a character marks it as a favorite and highlights it visually.
+3. LocalStorage: Favorite characters are saved in localStorage to persist between page reloads.
+4. Search characters: Users can search for specific characters by name. Favorites remain visible even after performing new searches.
+5. Remove favorites: You can remove an individual favorite or clear all favorites at once.
+6. Remove individual favorites: Clicking the 'x' next to a favorite removes it from the list and from localStorage.
+7. Clear all favorites: A button to clear all favorite characters from the list.
 
-```bash
-npm run dev
-```
 
-Este comando:
+### Usage
+- View the character list: The application automatically loads a list of Disney characters when it starts.
+- Add to favorites: Click on a character to mark it as a favorite. The background and text color will change to reflect that it is a favorite.
+- Search characters: Use the search field and click the "Search" button to find characters by name.
+- View favorites: On the right side of the screen, the characters you have marked as favorites will be displayed. Favorites are stored in localStorage and persist between page reloads.
+- Remove favorites: Click the 'x' next to a favorite to remove it from the list. You can also clear all favorites using the "Clear all favorites" button.
 
-- **Abre una ventana de Chrome y muestra tu página web**, al igual que hace el plugin de VS Code Live Server (Go live).
-- También **observa** todos los ficheros que hay dentro de la carpeta `src/`, para que cada vez que modifiques un fichero **refresca tu página en Chrome**.
-- También **procesa los ficheros** HTML, SASS / CSS y JS. Por ejemplo:
-   - Convierte los ficheros SASS en CSS.
-   - Combina los diferentes ficheros de HTML y los agrupa en uno o varios ficheros HTML.
+### Folder Structure
+The folder structure looks like this:
 
-Después de ejecutar `npm run dev` ya puedes empezar a editar todos los ficheros que están dentro de la carpeta `src/` y programar cómodamente.
-
-### Pasos para publicar el proyecto en GitHub Pages:
-
-Para generar tu página para producción ejecuta el comando:
-
-```bash
-npm run build
-```
-
-Y a continuación:
-
-1. Sube a tu repo la carpeta `docs/` que se te acaba de generar.
-1. Entra en la pestaña `settings` de tu repo.
-1. Y en el apartado de GitHub Pages activa la opción **master branch /docs folder**.
-1. Y ya estaría!!!
-
-Además, los comandos:
-
-```bash
-npm run push-docs
-```
-o
-
-```bash
-npm run deploy
-```
-
-son un atajo que nos genera la versión de producción y hace push de la carpeta `docs/` del tirón. Te recomendamos ver el fichero `package.json` para aprender cómo funciona.
-<!--
-## Flujo de archivos con Gulp
-
-Estas tareas de Gulp producen el siguiente flujo de archivos:
-
-![Gulp flow](./gulp-flow.png)
-
-## `gulpfile.js` y `config.json`
-
-Nuestro **gulpfile.js** usa el fichero `config.json` de configuración con las rutas de los archivos a generar / observar.
-
-De esta manera separarmos las acciones que están en `gulpfile.js` de la configuración de las acciones que están en `config.json`.
--->
-## Estructura de carpetas
-
-La estructura de carpetas tiene esta pinta:
-
-```
 src
- ├─ api // los ficheros de esta carpeta se copian en public/api/
+ ├─ api // files from this folder are copied to public/api/
  |  └─ data.json
  ├─ images
- |  └─ logo.jpg
- ├─ js // los ficheros de esta carpeta se concatenan en el fichero main.js y este se guarda en public/main.js
+ |  └─ disney-castle.jpg
+ ├─ js // files from this folder are concatenated into the main.js file and saved in public/main.js
  |  ├─ main.js
- |  └─ events.js
  ├─ scss
- |  ├─ components
  |  ├─ core
  |  ├─ layout
  |  └─ pages
  └─ html
     └─ partials
-```
 
-> **NOTA:** Los partials de HTML y SASS del proyecto son orientativos. Te recomendamos usar los que quieras, y borrar los que no uses.
-<!--
-## Vídeotutoriales del Starter kit
+### Contributing
+Contributions are welcome! If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. Please ensure that your code adheres to the project's style guide and that you write tests for new features or bug fixes.
 
-- [Qué es, trabajar con la versión de desarrollo y rutas relativas](https://www.youtube.com/watch?v=XwvhXvBijos)
-- [Migración de un proyecto, trabajar con la versión de producción y GitHub Pages](https://www.youtube.com/watch?v=qqGClcgt9Uc)
-- [Motor de plantillas](https://www.youtube.com/watch?v=4GwXOJ045Zg)
--->
-## Falta algo?
+### Steps to contribute:
+- Fork the repository.
+- Create a new branch (git checkout -b feature-branch).
+- Make your changes.
+- Commit your changes (git commit -m 'Add new feature').
+- Push to your branch (git push origin feature-branch).
+- Create a new pull request.
 
-Echas de menos que el kit haga algo en concreto? Pidelo sin problema a través de las issues o si te animas a mejorarlo mándanos un PR :)
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+### Contact
+For questions or feedback, feel free to reach out to:
+
+Name: Bianca Dragan
+Email: andreeabiancadragan@gmail.com
+GitHub: biancadragan
+
+Thank you for checking out the Disney Characters App!
