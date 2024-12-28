@@ -8,7 +8,7 @@ const searchBtn = document.querySelector('.js_searchBtn');
 let favouriteCharacters = [];
 let allCharacters = [];
 
-// Renderiza un personaje con la clase 'favourite' si es favorito
+// Renderiza un personaje
 const renderOneCharacter = (characterObj) => {
   const imageUrl = characterObj.imageUrl || 'https://placehold.co/400x400/ffffff/555555?text=Disney';
 
@@ -44,6 +44,7 @@ const renderAllCharacters = () => {
 // Maneja los personajes favoritos
 const handleFavourite = (ev) => {
   const clickedId = Number(ev.currentTarget.getAttribute('id'));
+
   const clickedCharacterObj = allCharacters.find((eachCharacter) => eachCharacter._id === clickedId);
 
   if (!clickedCharacterObj) {
@@ -72,18 +73,53 @@ const renderFavourites = () => {
       <li class="favourite js_character ${character._id}" id="${character._id}">
         <img src="${character.imageUrl || 'https://placehold.co/400x400/ffffff/555555?text=Disney'}" alt="${character.name}" class="character__image" />
         <h3 class="character__name">${character.name}</h3>
+        <button class="character__remove-btn js_removeFavouriteBtn">x</button>
       </li>
     `;
   });
 
+  // Botón para borrar todos los favoritos
+  html += `
+    <button class="clear-favourites-btn js_clearFavouritesBtn">Clear all favourites</button>
+  `;
+
   favouritesUl.innerHTML = html;
+
+  // Añadir evento para eliminar favoritos
+  const removeBtns = document.querySelectorAll('.js_removeFavouriteBtn');
+  removeBtns.forEach((btn) => {
+    btn.addEventListener('click', handleRemoveFavourite);
+  });
+
+  // Crear botón "Clear all favourites" antes de agregarle el listener
+  const clearBtn = document.querySelector('.js_clearFavouritesBtn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', handleClearAllFavourites);
+  }
 };
 
-// Cargar los favoritos desde localStorage
-if (localStorage.getItem('favouriteCharacters') !== null) {
-  favouriteCharacters = JSON.parse(localStorage.getItem('favouriteCharacters'));
+// Función para borrar todos los favoritos
+const handleClearAllFavourites = () => {
+  favouriteCharacters = [];
+  localStorage.setItem('favouriteCharacters', JSON.stringify(favouriteCharacters));
   renderFavourites();
-}
+  renderAllCharacters(); 
+};
+
+const handleRemoveFavourite = (ev) => {
+  ev.stopPropagation(); // Esto evita que el evento se propague al contenedor principal
+
+  const clickedId = Number(ev.currentTarget.parentNode.getAttribute('id'));
+
+  const favouriteCharacterIdx = favouriteCharacters.findIndex((eachCharacter) => eachCharacter._id === clickedId);
+
+  if (favouriteCharacterIdx !== -1) {
+    favouriteCharacters.splice(favouriteCharacterIdx, 1);
+    localStorage.setItem('favouriteCharacters', JSON.stringify(favouriteCharacters));
+    renderFavourites();
+    renderAllCharacters();
+  }
+};
 
 // Fetch para obtener los datos iniciales
 const fetchInitialCharacters = () => {
@@ -103,8 +139,11 @@ const fetchSearchCharacters = (query) => {
   fetch(`https://api.disneyapi.dev/character?pageSize=50&name=${encodedQuery}`)
     .then((response) => response.json())
     .then((data) => {
+      console.log('Estructura completa de la respuesta de la API:', data);  // Ver la respuesta completa
+
       if (data && data.data) {
-        const characters = Array.isArray(data.data) ? data.data : [data.data];
+        // Si 'data.data' no es un array, transformamos a array para asegurar que siempre sea un array
+        const characters = Array.isArray(data.data) ? data.data : [data.data]; 
 
         if (characters.length > 0) {
           allCharacters = characters;
@@ -116,6 +155,7 @@ const fetchSearchCharacters = (query) => {
         }
       } else {
         console.log('La respuesta no contiene datos esperados');
+        console.log('Respuesta:', data); // Imprime la respuesta completa para revisar su estructura
         allCharacters = [];
         renderAllCharacters();
       }
@@ -124,6 +164,7 @@ const fetchSearchCharacters = (query) => {
 };
 
 // Maneja el evento de búsqueda
+// Define la función de búsqueda
 const handleSearch = (ev) => {
   ev.preventDefault();
   const query = searchInput.value.trim();
@@ -135,13 +176,21 @@ const handleSearch = (ev) => {
   }
 };
 
+// Luego, asegúrate de que este evento esté conectado después de la definición de las funciones necesarias
+searchBtn.addEventListener('click', handleSearch);
+
+
 // Event listener para el botón de buscar
 searchBtn.addEventListener('click', handleSearch);
 
+// Carga los favoritos desde localStorage
+if (localStorage.getItem('favouriteCharacters') !== null) {
+  favouriteCharacters = JSON.parse(localStorage.getItem('favouriteCharacters'));
+  renderFavourites();
+}
+
 // Fetch inicial para cargar personajes
 fetchInitialCharacters();
-
-  
 
 
 
